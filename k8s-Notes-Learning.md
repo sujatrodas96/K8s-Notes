@@ -128,17 +128,13 @@ Most Important Part to know
 
 Events:
 
-Type    Reason          Age    From               Message
-Normal  Scheduled       8m1s   default-scheduler  Successfully assigned nginx/nginx-pod to devops-cluster-worker2
-Normal  Pulling         8m1s   kubelet            spec.containers{nginx}: Pulling image "nginx:latest"
-Normal  Pulled          7m58s  kubelet            spec.containers{nginx}: Successfully pulled image "nginx:latest" in 3.293s (3.293s including waiting)
-Normal  Created         7m58s  kubelet            spec.containers{nginx}: Created container nginx
-Normal  Started         7m58s  kubelet            spec.containers{nginx}: Started container nginx
-Normal  SandboxChanged  2m27s  kubelet            Pod sandbox changed, it will be killed and re-created.
-Normal  Pulling         2m27s  kubelet            spec.containers{nginx}: Pulling image "nginx:latest"
-Normal  Pulled          2m22s  kubelet            spec.containers{nginx}: Successfully pulled image "nginx:latest" in 1.604s (4.813s including waiting)
-Normal  Created         2m22s  kubelet            spec.containers{nginx}: Created container nginx
-Normal  Started         2m22s  kubelet            spec.containers{nginx}: Started container nginx
+Type    Reason     Age   From               Message
+----    ------     ----  ----               -------
+Normal  Scheduled  9s    default-scheduler  Successfully assigned nginx/nginx-pod to devops-cluster-worker2
+Normal  Pulling    9s    kubelet            spec.containers{nginx}: Pulling image "nginx:latest"
+Normal  Pulled     7s    kubelet            spec.containers{nginx}: Successfully pulled image "nginx:latest" in 1.501s (1.501s including waiting)
+Normal  Created    7s    kubelet            spec.containers{nginx}: Created container nginx
+Normal  Started    7s    kubelet            spec.containers{nginx}: Started container nginx
 
 For creating Pod is easy but need the Pod making scalable so thats way Deployment cames into picture
 ------------------------------------------------------------------------------------------------------------
