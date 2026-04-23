@@ -128,6 +128,9 @@ Most Important Part to know
 
 Events:
 
+Output:
+--------------
+
 Type    Reason     Age   From               Message
 ----    ------     ----  ----               -------
 Normal  Scheduled  9s    default-scheduler  Successfully assigned nginx/nginx-pod to devops-cluster-worker2
