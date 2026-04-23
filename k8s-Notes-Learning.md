@@ -128,8 +128,7 @@ Most Important Part to know
 
 Events:
 
-  Type    Reason          Age    From               Message
-
+Type    Reason          Age    From               Message
 Normal  Scheduled       8m1s   default-scheduler  Successfully assigned nginx/nginx-pod to devops-cluster-worker2
 Normal  Pulling         8m1s   kubelet            spec.containers{nginx}: Pulling image "nginx:latest"
 Normal  Pulled          7m58s  kubelet            spec.containers{nginx}: Successfully pulled image "nginx:latest" in 3.293s (3.293s including waiting)
