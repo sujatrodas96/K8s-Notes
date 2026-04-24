@@ -1,3 +1,15 @@
+NameSpaces
+--------------
+    In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces. Namespace-based scoping is applicable only for namespaced objects (e.g. Deployments, Services, etc.) and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc.).
+
+When to Use Multiple Namespaces
+---------------------------------
+    Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
+
+    Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
+
+    Namespaces are a way to divide cluster resources between multiple users
+
 this way manage kubernetes resource in a structured way
 ------------------------------------------------------------
 
@@ -88,6 +100,7 @@ First we will create a namespace which can be called also groups
 
     output: namespace/nginx created
 
+
 Now we will create a pod
 --------------------------------
     vim pod.yaml
@@ -103,6 +116,26 @@ Now we will create a pod
         image: nginx:latest
         ports: 
          - containerPort: 80
+
+
+Another Yaml for Pod
+-------------------------
+    vim pod1.yaml
+    
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: label-demo
+    labels:
+        environment: production
+        app: nginx
+    spec:
+    containers:
+    - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
 
     Note: in spec you can define one or more containers also
 
@@ -138,6 +171,57 @@ Normal  Pulling    9s    kubelet            spec.containers{nginx}: Pulling imag
 Normal  Pulled     7s    kubelet            spec.containers{nginx}: Successfully pulled image "nginx:latest" in 1.501s (1.501s including waiting)
 Normal  Created    7s    kubelet            spec.containers{nginx}: Created container nginx
 Normal  Started    7s    kubelet            spec.containers{nginx}: Started container nginx
+
+
+Labels and Selectors
+---------------------
+
+Labels are key/value pairs that are attached to objects such as Pods. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users, but do not directly imply semantics to the core system. Labels can be used to organize and to select subsets of objects. Labels can be attached to objects at creation time and subsequently added and modified at any time. Each object can have a set of key/value labels defined. Each Key must be unique for a given object.
+
+
+You can find Pod in this specif way Also
+-----------------------------------------
+
+kubectl get pods -n nginx -l environment=production,tier=frontend
+
+Pod has 5 phase Those Phase are
+--------------------------------------
+
+Pending:
+---------
+	The Pod has been accepted by the Kubernetes cluster, but one or more of the containers has not been set up and made ready to run. This includes time a Pod spends waiting to be scheduled as well as the time spent downloading container images over the network.
+Running:
+---------
+	The Pod has been bound to a node, and all of the containers have been created. At least one container is still running, or is in the process of starting or restarting.
+Succeeded:
+-----------
+	All containers in the Pod have terminated in success, and will not be restarted.
+Failed:
+-----------
+	All containers in the Pod have terminated, and at least one container has terminated in failure. That is, the container either exited with non-zero status or was terminated by the system, and is not set for automatic restarting.
+Unknown:
+-----------
+	For some reason the state of the Pod could not be obtained. This phase typically occurs due to an error in communicating with the node where the Pod should be running.
+
+When a pod is failing to start repeatedly, CrashLoopBackOff may appear in the Status field of some kubectl commands. Similarly,
+when a pod is being deleted, Terminating may appear in the Status field of some kubectl commands.
+
+Make sure not to confuse Status, a kubectl display field for user intuition, with the pod's phase. Pod phase is an explicit part of the Kubernetes data model and of the Pod API.
+
+  NAMESPACE               NAME               READY   STATUS             RESTARTS   AGE
+  alessandras-namespace   alessandras-pod    0/1     CrashLoopBackOff   200        2d9h
+
+A Pod is granted a term to terminate gracefully, which defaults to 30 seconds. You can use the flag --force to terminate a Pod by force.
+
+Container Lifecycle
+--------------------
+
+Once the scheduler assigns a Pod to a Node, the kubelet starts creating containers for that Pod using a container runtime. 
+There are three possible container states:
+
+    Waiting 
+    Running
+    Terminated.
 
 For creating Pod is easy but need the Pod making scalable so thats way Deployment cames into picture
 ------------------------------------------------------------------------------------------------------------
@@ -368,22 +452,96 @@ cmd: kubectl autoscale deployment/nginx-deployment -n nginx --min=10 --max=15 --
 ReplicaSet
 -------------
 
-A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. Usually, you define a Deployment and let that Deployment manage ReplicaSets automatically.
-A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods.
+    A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. Usually, you define a Deployment and let that Deployment manage ReplicaSets automatically.
+    A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods.
 
 How a ReplicaSet works
 --------------------------
 
-A ReplicaSet is defined with fields, including a selector that specifies how to identify Pods it can acquire, a number of replicas indicating how many Pods it should be maintaining, and a pod template specifying the data of new Pods it should create to meet the number of replicas criteria. A ReplicaSet then fulfills its purpose by creating and deleting Pods as needed to reach the desired number. When a ReplicaSet needs to create new Pods, it uses its Pod template.
+    A ReplicaSet is defined with fields, including a selector that specifies how to identify Pods it can acquire, a number of replicas indicating how many Pods it should be maintaining, and a pod template specifying the data of new Pods it should create to meet the number of replicas criteria. A ReplicaSet then fulfills its purpose by creating and deleting Pods as needed to reach the desired number. When a ReplicaSet needs to create new Pods, it uses its Pod template.
 
-A ReplicaSet is linked to its Pods via the Pods' metadata.ownerReferences field, which specifies what resource the current object is owned by. All Pods acquired by a ReplicaSet have their owning ReplicaSet's identifying information within their ownerReferences field. It's through this link that the ReplicaSet knows of the state of the Pods it is maintaining and plans accordingly.
+    A ReplicaSet is linked to its Pods via the Pods' metadata.ownerReferences field, which specifies what resource the current object is owned by. All Pods acquired by a ReplicaSet have their owning ReplicaSet's identifying information within their ownerReferences field. It's through this link that the ReplicaSet knows of the state of the Pods it is maintaining and plans accordingly.
 
-A ReplicaSet identifies new Pods to acquire by using its selector. If there is a Pod that has no OwnerReference or the OwnerReference is not a Controller and it matches a ReplicaSet's selector, it will be immediately acquired by said ReplicaSet.
+    A ReplicaSet identifies new Pods to acquire by using its selector. If there is a Pod that has no OwnerReference or the OwnerReference is not a Controller and it matches a ReplicaSet's selector, it will be immediately acquired by said ReplicaSet.
 
 When to use a ReplicaSet
 ----------------------------
 
-A ReplicaSet ensures that a specified number of pod replicas are running at any given time. However, a Deployment is a higher-level concept that manages ReplicaSets and provides declarative updates to Pods along with a lot of other useful features. Therefore, we recommend using Deployments instead of directly using ReplicaSets, unless you require custom update orchestration or don't require updates at all.
+    A ReplicaSet ensures that a specified number of pod replicas are running at any given time. However, a Deployment is a higher-level concept that manages ReplicaSets and provides declarative updates to Pods along with a lot of other useful features. Therefore, we recommend using Deployments instead of directly using ReplicaSets, unless you require custom update orchestration or don't require updates at all.
 
-This actually means that you may never need to manipulate ReplicaSet objects: use a Deployment instead, and define your application in the spec section.
+    This actually means that you may never need to manipulate ReplicaSet objects: use a Deployment instead, and define your application in the spec section.
 
+To Create a ReplicaSet through Yaml File
+------------------------------------------
+
+    vi replicaset.yaml
+
+    kind: ReplicaSet
+    apiVersion: apps/v1
+    metadata:
+    name: nginx-replicaset
+    namespace: nginx
+    spec:
+    replicas: 2
+    selector:
+        matchLabels:
+        app: nginx
+    template:
+        metadata:
+        name: nginx-rep-pod
+        labels:
+            app: nginx
+        spec:
+        containers:
+        - name: nginx
+            image: nginx:latest
+            ports:
+            - containerPort: 80
+
+    kubectl apply -f replicaset.yaml
+
+To see ReplicaSet through cmd
+-------------------------------
+
+    kubectl get rs -n nginx
+
+To describe the ReplicaSet
+----------------------------
+
+    kubectl describe rs/nginx-replicaset -n nginx
+
+
+DaemonSet
+-----------
+
+    A DaemonSet defines Pods that provide node-local facilities. These might be fundamental to the operation of your cluster, such as a networking helper tool, or be part of an add-on.
+
+    A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. As nodes are removed from the cluster, those Pods are garbage collected. Deleting a DaemonSet will clean up the Pods it created.
+
+To create DaemonSet through Yaml File
+--------------------------------------
+
+    vi daemonset.yaml
+
+    kind: DaemonSet
+    apiVersion: apps/v1
+    metadata:
+    name: nginx-daemonSet
+    namespace: nginx
+    spec:
+    selector:
+        matchLabels:
+        app: nginx
+    template:
+        metadata:
+        name: nginx-dmn-pod
+        labels:
+            app: nginx
+        spec:
+        containers:
+        - name: nginx
+            image: nginx:latest
+            ports:
+            - containerPort: 80
+
+    kubectl apply -f daemonset.yaml
