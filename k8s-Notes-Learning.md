@@ -406,13 +406,13 @@ Output:
 Labels and Selectors
 ---------------------
 
-Labels are key/value pairs that are attached to objects such as Pods. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users, but do not directly imply semantics to the core system. Labels can be used to organize and to select subsets of objects. Labels can be attached to objects at creation time and subsequently added and modified at any time. Each object can have a set of key/value labels defined. Each Key must be unique for a given object.
+    Labels are key/value pairs that are attached to objects such as Pods. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users, but do not directly imply semantics to the core system. Labels can be used to organize and to select subsets of objects. Labels can be attached to objects at creation time and subsequently added and modified at any time. Each object can have a set of key/value labels defined. Each Key must be unique for a given object.
 
 
 You can find Pod in this specif way Also
 -----------------------------------------
 
-kubectl get pods -n nginx -l environment=production,tier=frontend
+    kubectl get pods -n nginx -l environment=production,tier=frontend
 
 Pod has 5 phase Those Phase are
 --------------------------------------
@@ -433,21 +433,21 @@ Unknown:
 -----------
 	For some reason the state of the Pod could not be obtained. This phase typically occurs due to an error in communicating with the node where the Pod should be running.
 
-When a pod is failing to start repeatedly, CrashLoopBackOff may appear in the Status field of some kubectl commands. Similarly,
-when a pod is being deleted, Terminating may appear in the Status field of some kubectl commands.
+    When a pod is failing to start repeatedly, CrashLoopBackOff may appear in the Status field of some kubectl commands. Similarly,
+    when a pod is being deleted, Terminating may appear in the Status field of some kubectl commands.
 
-Make sure not to confuse Status, a kubectl display field for user intuition, with the pod's phase. Pod phase is an explicit part of the Kubernetes data model and of the Pod API.
+    Make sure not to confuse Status, a kubectl display field for user intuition, with the pod's phase. Pod phase is an explicit part of the Kubernetes data model and of the Pod API.
 
   NAMESPACE               NAME               READY   STATUS             RESTARTS   AGE
   alessandras-namespace   alessandras-pod    0/1     CrashLoopBackOff   200        2d9h
 
-A Pod is granted a term to terminate gracefully, which defaults to 30 seconds. You can use the flag --force to terminate a Pod by force.
+    A Pod is granted a term to terminate gracefully, which defaults to 30 seconds. You can use the flag --force to terminate a Pod by force.
 
 Container Lifecycle
 --------------------
 
-Once the scheduler assigns a Pod to a Node, the kubelet starts creating containers for that Pod using a container runtime. 
-There are three possible container states:
+    Once the scheduler assigns a Pod to a Node, the kubelet starts creating containers for that Pod using a container runtime. 
+    There are three possible container states:
 
     Waiting 
     Running
@@ -456,30 +456,30 @@ There are three possible container states:
 For creating Pod is easy but need the Pod making scalable so thats way Deployment cames into picture
 ------------------------------------------------------------------------------------------------------------
 
-A Deployment manages a set of Pods to run an application workload, usually one that doesn't maintain state.
-A Deployment provides declarative updates for Pods and ReplicaSets.
+    A Deployment manages a set of Pods to run an application workload, usually one that doesn't maintain state.
+    A Deployment provides declarative updates for Pods and ReplicaSets.
 
-You describe a desired state in a Deployment, and the Deployment Controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments.
+    You describe a desired state in a Deployment, and the Deployment Controller changes the actual state to the desired state at a controlled rate. You can define Deployments to create new ReplicaSets, or to remove existing Deployments and adopt all their resources with new Deployments.
 
-Note:
-Do not manage ReplicaSets owned by a Deployment. Consider opening an issue in the main Kubernetes repository if your use case is not covered below.
+    Note:
+    Do not manage ReplicaSets owned by a Deployment. Consider opening an issue in the main Kubernetes repository if your use case is not covered below.
 
 Use Case
 ----------
-The following are typical use cases for Deployments:
+    The following are typical use cases for Deployments:
 
-Create a Deployment to rollout a ReplicaSet. The ReplicaSet creates Pods in the background. Check the status of the rollout to see if it succeeds or not.
+    Create a Deployment to rollout a ReplicaSet. The ReplicaSet creates Pods in the background. Check the status of the rollout to see if it succeeds or not.
 
-Declare the new state of the Pods by updating the PodTemplateSpec of the Deployment. A new ReplicaSet is created, and the Deployment gradually scales it up while scaling down the old ReplicaSet, ensuring Pods are replaced at a controlled rate. Each new ReplicaSet updates the revision of the Deployment.
+    Declare the new state of the Pods by updating the PodTemplateSpec of the Deployment. A new ReplicaSet is created, and the Deployment gradually scales it up while scaling down the old ReplicaSet, ensuring Pods are replaced at a controlled rate. Each new ReplicaSet updates the revision of the Deployment.
 
-Rollback to an earlier Deployment revision if the current state of the Deployment is not stable. Each rollback updates the revision of the Deployment.
-Scale up the Deployment to facilitate more load.
+    Rollback to an earlier Deployment revision if the current state of the Deployment is not stable. Each rollback updates the revision of the Deployment.
+    Scale up the Deployment to facilitate more load.
 
-Pause the rollout of a Deployment to apply multiple fixes to its PodTemplateSpec and then resume it to start a new rollout.
+    Pause the rollout of a Deployment to apply multiple fixes to its PodTemplateSpec and then resume it to start a new rollout.
 
-Use the status of the Deployment as an indicator that a rollout has stuck.
+    Use the status of the Deployment as an indicator that a rollout has stuck.
 
-Clean up older ReplicaSets that you don't need anymore.
+    Clean up older ReplicaSets that you don't need anymore.
 
 
 So, Creating deployment 
@@ -664,11 +664,11 @@ Output:
 
 Now you've decided to undo the current rollout and rollback to the previous revision:
 ----------------------------------------------------------------------------------------
-cmd: kubectl rollout undo deployment/nginx-deployment -n nginx
+    cmd: kubectl rollout undo deployment/nginx-deployment -n nginx
 
 Alternatively, you can rollback to a specific revision by specifying it with --to-revision:
 ----------------------------------------------------------------------------------------------
-cmd: kubectl rollout undo deployment/nginx-deployment -n nginx --to-revision=2
+    cmd: kubectl rollout undo deployment/nginx-deployment -n nginx --to-revision=2
 
 Output:
 ---------
@@ -677,7 +677,7 @@ Output:
 Assuming Horizontal Pod AutoScaling
 ---------------------------------------
 
-cmd: kubectl autoscale deployment/nginx-deployment -n nginx --min=10 --max=15 --cpu-percent=80%
+    cmd: kubectl autoscale deployment/nginx-deployment -n nginx --min=10 --max=15 --cpu-percent=80%
 
 ReplicaSet
 -------------
