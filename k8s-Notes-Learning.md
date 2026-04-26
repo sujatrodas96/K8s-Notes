@@ -176,7 +176,30 @@ Customization and extensibility
 
 
 
+To Create Cluster
+-------------------
 
+    vi config.yaml
+
+    kind: Cluster
+    apiVersion: kind.x-k8s.io/v1alpha4
+
+    nodes:
+    - role: control-plane
+        image: kindest/node:v1.29.0
+
+    - role: worker
+        image: kindest/node:v1.29.0
+
+    - role: worker
+        image: kindest/node:v1.29.0
+
+this has one control-plane and 2 nodes
+
+To create cluster
+I am using KIND so the cmd will be
+
+kind create cluster --name=my-cluster --config=config.yaml
 
 
 NameSpaces
