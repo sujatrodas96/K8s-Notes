@@ -201,6 +201,32 @@ I am using KIND so the cmd will be
 
 kind create cluster --name=my-cluster --config=config.yaml
 
+To see the Cluster info you have to write cmd
+----------------------------------------------
+
+    kubectl cluster-info
+
+Output:
+--------
+
+    Kubernetes control plane is running at https://127.0.0.1:41735
+    CoreDNS is running at https://127.0.0.1:41735/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+    To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+To check the nodes and control-planew are working properly or not
+-------------------------------------------------------------------
+
+kubectl get nodes
+
+Output:
+--------
+
+    NAME                           STATUS   ROLES           AGE   VERSION
+    devops-cluster-control-plane   Ready    control-plane   96d   v1.29.0
+    devops-cluster-worker          Ready    <none>          96d   v1.29.0
+    devops-cluster-worker2         Ready    <none>          96d   v1.29.0
+
+    
 
 NameSpaces
 --------------
