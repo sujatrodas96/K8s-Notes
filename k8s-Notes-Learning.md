@@ -394,13 +394,13 @@ Events:
 Output:
 --------------
 
-Type    Reason     Age   From               Message
-----    ------     ----  ----               -------
-Normal  Scheduled  9s    default-scheduler  Successfully assigned nginx/nginx-pod to devops-cluster-worker2
-Normal  Pulling    9s    kubelet            spec.containers{nginx}: Pulling image "nginx:latest"
-Normal  Pulled     7s    kubelet            spec.containers{nginx}: Successfully pulled image "nginx:latest" in 1.501s (1.501s including waiting)
-Normal  Created    7s    kubelet            spec.containers{nginx}: Created container nginx
-Normal  Started    7s    kubelet            spec.containers{nginx}: Started container nginx
+    Type    Reason     Age   From               Message
+    ----    ------     ----  ----               -------
+    Normal  Scheduled  9s    default-scheduler  Successfully assigned nginx/nginx-pod to devops-cluster-worker2
+    Normal  Pulling    9s    kubelet            spec.containers{nginx}: Pulling image "nginx:latest"
+    Normal  Pulled     7s    kubelet            spec.containers{nginx}: Successfully pulled image "nginx:latest" in 1.501s (1.501s including waiting)
+    Normal  Created    7s    kubelet            spec.containers{nginx}: Created container nginx
+    Normal  Started    7s    kubelet            spec.containers{nginx}: Started container nginx
 
 
 Labels and Selectors
