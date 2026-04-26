@@ -611,14 +611,14 @@ Rolling updates:
     cmd: kubectl get pods -n nginx -o wide
 
     Output:
-NAME                                READY   STATUS              RESTARTS         AGE    IP            NODE                     NOMINATED NODE   READINESS GATES
-nginx-deployment-774f469f5c-lxwv4   1/1     Running             0                98s    10.244.2.6    devops-cluster-worker    <none>           <none>
-nginx-deployment-774f469f5c-w8fzt   1/1     Running             0                73s    10.244.1.11   devops-cluster-worker2   <none>           <none>
-nginx-deployment-774f469f5c-zcx9p   1/1     Running             0                2m4s   10.244.1.10   devops-cluster-worker2   <none>           <none>
-nginx-deployment-cbd8747bb-292zv    0/1     ContainerCreating   0                2s     <none>        devops-cluster-worker2   <none>           <none>
-nginx-pod                           1/1     Running             1 (169m ago)     175m   10.244.1.4    devops-cluster-worker2   <none>           <none>
-nginx-replicaset-7vqwh              1/1     Running             144 (169m ago)   87d    10.244.2.3    devops-cluster-worker    <none>           <none>
-nginx-replicaset-pnw2k              1/1     Running             143 (169m ago)   87d    10.244.2.2    devops-cluster-worker    <none>           <none>
+    NAME                                READY   STATUS              RESTARTS         AGE    IP            NODE                     NOMINATED NODE   READINESS GATES
+    nginx-deployment-774f469f5c-lxwv4   1/1     Running             0                98s    10.244.2.6    devops-cluster-worker    <none>           <none>
+    nginx-deployment-774f469f5c-w8fzt   1/1     Running             0                73s    10.244.1.11   devops-cluster-worker2   <none>           <none>
+    nginx-deployment-774f469f5c-zcx9p   1/1     Running             0                2m4s   10.244.1.10   devops-cluster-worker2   <none>           <none>
+    nginx-deployment-cbd8747bb-292zv    0/1     ContainerCreating   0                2s     <none>        devops-cluster-worker2   <none>           <none>
+    nginx-pod                           1/1     Running             1 (169m ago)     175m   10.244.1.4    devops-cluster-worker2   <none>           <none>
+    nginx-replicaset-7vqwh              1/1     Running             144 (169m ago)   87d    10.244.2.3    devops-cluster-worker    <none>           <none>
+    nginx-replicaset-pnw2k              1/1     Running             143 (169m ago)   87d    10.244.2.2    devops-cluster-worker    <none>           <none>
 
 To check all rollout history
 ------------------------------------
