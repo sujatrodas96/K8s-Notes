@@ -216,7 +216,7 @@ Output:
 To check the nodes and control-plane are working properly or not
 -------------------------------------------------------------------
 
-kubectl get nodes
+    kubectl get nodes
 
 Output:
 --------
