@@ -502,7 +502,7 @@ So, Creating deployment
         metadata:
         name: nginx-dep-pod
         labels:
-            app: nginx
+            app: nginx-deploy
 
         spec:
         containers:
@@ -720,7 +720,7 @@ To Create a ReplicaSet through Yaml File
         metadata:
         name: nginx-rep-pod
         labels:
-            app: nginx
+            app: nginx-rs
         spec:
         containers:
         - name: nginx
